@@ -10,6 +10,11 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
+@app.route("/")
+def index():
+    return jsonify({"message": "This is the api!"})
+
+
 # Enhanced parking spots with capacity (general garages, not specific spots)
 parking_spots = [
     {
