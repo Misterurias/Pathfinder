@@ -1,1 +1,1 @@
-web: gunicorn realtime_parking_system:app -b 0.0.0.0:$PORT
+web: gunicorn parking_backend:app --bind 0.0.0.0:$PORT
