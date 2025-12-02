@@ -57,6 +57,9 @@ class Trie {
 }
 
 export default function PathfinderUI() {
+
+  const API = "https://pathfinder-copy-production.up.railway.app/"
+  const LOCALAPI = "http://localhost:5050/api"
   // Location state
   const [userLocation, setUserLocation] = useState({ lat: 40.4400, lng: -79.9950 });
   const [destinationSearch, setDestinationSearch] = useState("");
@@ -117,7 +120,7 @@ export default function PathfinderUI() {
     // Check if backend is available
     const checkConnection = async () => {
       try {
-        const response = await fetch('http://localhost:5050/api/health', {
+        const response = await fetch(`${API}/health`, {
           method: 'GET',
           mode: 'cors'
         });
@@ -229,7 +232,7 @@ export default function PathfinderUI() {
     if (!isConnected || !currentUser) return;
 
     try {
-      await fetch('http://localhost:5050/api/update_position', {
+      await fetch(`${API}/update_position`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -322,7 +325,7 @@ export default function PathfinderUI() {
   // ---------------------- AUTH FUNCTIONS ----------------------
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:5050/api/login', {
+      const response = await fetch(`${API}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -359,7 +362,7 @@ export default function PathfinderUI() {
     }
     
     try {
-      const response = await fetch('http://localhost:5050/api/register', {
+      const response = await fetch(`${API}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -380,7 +383,7 @@ export default function PathfinderUI() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5050/api/logout', { method: 'POST' });
+      await fetch(`${API}/logout`, { method: 'POST' });
     } catch (err) {
       // Ignore errors
     }
@@ -397,7 +400,7 @@ export default function PathfinderUI() {
   
   const loadPreferences = async () => {
     try {
-      const response = await fetch('http://localhost:5050/api/preferences');
+      const response = await fetch(`${API}/preferences`);
       if (response.ok) {
         const data = await response.json();
         setPriceWeight(data.price_weight * 100);
@@ -409,7 +412,7 @@ export default function PathfinderUI() {
   
   const savePreferences = async () => {
     try {
-      const response = await fetch('http://localhost:5050/api/preferences', {
+      const response = await fetch(`${API}/preferences`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ price_weight: priceWeight / 100 })
@@ -434,7 +437,7 @@ export default function PathfinderUI() {
     
     // Use REST API to find parking
     try {
-      const response = await fetch('http://localhost:5050/api/find_parking', {
+      const response = await fetch(`${API}/find_parking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -518,7 +521,7 @@ export default function PathfinderUI() {
     
     pollIntervalRef.current = setInterval(async () => {
       try {
-        const response = await fetch('http://localhost:5050/api/check_availability', {
+        const response = await fetch(`${API}/check_availability`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -554,7 +557,7 @@ export default function PathfinderUI() {
   // ---------------------- RESERVATION SYSTEM ----------------------
   const reserveSpot = async (parkingOption) => {
     try {
-      const response = await fetch('http://localhost:5050/api/reserve_spot', {
+      const response = await fetch(`${API}/reserve_spot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -607,7 +610,7 @@ export default function PathfinderUI() {
     if (!reservedSpot) return;
     
     try {
-      const response = await fetch('http://localhost:5050/api/complete_payment', {
+      const response = await fetch(`${API}/complete_payment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
