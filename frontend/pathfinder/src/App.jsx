@@ -58,7 +58,7 @@ class Trie {
 
 export default function PathfinderUI() {
 
-  const API = "https://pathfinder-copy-production.up.railway.app/api"
+  const API = "https://pathfinder-copy-production.up.railway.app"
   const LOCALAPI = "http://localhost:5050/api"
   // Location state
   const [userLocation, setUserLocation] = useState({ lat: 40.4400, lng: -79.9950 });
