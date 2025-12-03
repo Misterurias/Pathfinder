@@ -2,21 +2,38 @@ import math
 import time
 import threading
 import requests
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from datetime import datetime
 from flask_cors import CORS
 
-app = Flask(__name__)
+# app = Flask(__name__)
+# CORS(app, resources={r"/*": {"origins": "*"}})
+
+
+
+# @app.route("/")
+# def index():
+#     return jsonify({"message": "This is the api!"})
+
+# @app.route("/home")
+# def home():
+#     return render_template("frontend/pathfinder/index.html")
+
+
+app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-
-@app.route("/")
+@app.route("/api/welcome")
 def index():
     return jsonify({"message": "This is the api!"})
 
-@app.route("/home")
-def home():
-    return render_template("frontend/pathfinder/index.html")
+@app.route("/")
+def serve_frontend():
+    return send_from_directory("templates", "index.html")
+
+@app.route("/assets/<path:path>")
+def serve_assets(path):
+    return send_from_directory("static/assets", path)
 
 
 # Enhanced parking spots with capacity (general garages, not specific spots)
