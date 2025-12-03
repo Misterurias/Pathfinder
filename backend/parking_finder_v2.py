@@ -2,7 +2,7 @@ import math
 import time
 import threading
 import requests
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from datetime import datetime
 from flask_cors import CORS
 
@@ -13,6 +13,10 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route("/")
 def index():
     return jsonify({"message": "This is the api!"})
+
+@app.route("/home")
+def home():
+    return render_template("frontend/pathfinder/index.html")
 
 
 # Enhanced parking spots with capacity (general garages, not specific spots)
